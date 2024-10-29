@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+  /* Heart and Punch confetti animations */
+  .heart, .sad {
+    position: absolute;
+    top: 0;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: confetti 2s ease-out forwards;
+  }
+
+  @keyframes confetti {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) translateX(calc(-50vw + 100px)) rotate(720deg);
+      opacity: 0;
+    }
+  }
+</style>
+<body class="bg-pink-100">
+
+  <div class="container mx-auto flex flex-col md:flex-row justify-around items-center bg-gradient-to-t to-pink-200 from-pink-600 min-h-screen max-w-full p-4">
+      
+    <!-- Love Section -->
+    <div class="love items-center bg-white p-4 rounded-lg flex flex-col mb-4 md:mb-0">
+      <img src="lovee.gif" alt="love" class="w-48 md:w-64 mb-4 md:mb-8">
+      <button class="bg-pink-600 text-white text-lg md:text-xl font-bold py-2 px-4 rounded-lg" onclick="increaseLoveCount()">LOVE ME</button>
+    </div>
+      
+    <!-- Counter Section -->
+    <div class="count flex flex-col items-center space-y-4 md:space-y-8 mb-4 md:mb-0">
+      <p class="bg-white text-pink-800 font-bold py-3 px-6 md:py-4 md:px-8 text-2xl md:text-3xl rounded-lg w-64 md:w-96 text-center">
+        LOVE: <span id="love_count" class="ml-2">0</span>
+      </p>
+      <p class="bg-white text-pink-800 font-bold py-3 px-6 md:py-4 md:px-8 text-2xl md:text-3xl rounded-lg w-64 md:w-96 text-center">
+        PUNCH: <span id="punch_count" class="ml-2">0</span>
+      </p>
+    </div>
+      
+    <!-- Punch Section -->
+    <div class="punch items-center bg-white p-4 rounded-lg flex flex-col">
+      <img src="punch.gif" alt="punch" class="w-48 md:w-64 mb-4 md:mb-8">
+      <button class="bg-pink-600 text-white text-lg md:text-xl font-bold py-2 px-4 rounded-lg" onclick="increasePunchCount()">PUNCH ME</button>
+    </div>
+  </div>
+
+    <!-- Hidden Audio Element for Sound -->
+    <audio id="loveSound" src="love.mp3" preload="auto"></audio>
+    <audio id="sorrySound" src="sorry.aac" preload="auto"></audio>
+
+  <!-- Function for Increament -->
+  <script>
+    // Increase Love
+    let loveCount = 0;
+    function increaseLoveCount() {
+      loveCount++;
+      document.getElementById("love_count").innerText = loveCount;
+
+      // Play sound and start heart confetti if love count reaches 10
+      if (loveCount === 10) {
+        document.getElementById("loveSound").play();
+        startHeartConfetti();
+      }
+
+      if (loveCount === 11){
+        location.reload();
+      }
+    }
+
+    function startHeartConfetti() {
+      for (let i = 0; i < 80; i++) { // Create 50 hearts
+        createHeart();
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "❤️";
+      heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+      heart.style.animationDuration = `${Math.random() * 1 + 5}s`; // Random confetti fall duration
+      document.body.appendChild(heart);
+
+      // Remove the heart after the animation ends to clean up
+      heart.addEventListener("animationend", () => {
+        heart.remove();
+      });
+    }
+
+
+    // Increase Punch
+    let punchCount = 0;
+    function increasePunchCount() {
+      punchCount++;
+      document.getElementById("punch_count").innerText = punchCount;
+
+      // Play sound and start heart confetti if love count reaches 10
+      if (punchCount === 10) {
+        document.getElementById("sorrySound").play();
+        startpunchConfetti();
+      }
+
+      if (punchCount === 11){
+        location.reload();
+      }
+    }
+
+    function startpunchConfetti() {
+      for (let i = 0; i < 80; i++) { // Create 50 hearts
+        createSad();
+      }
+    }
+
+    function createSad() {
+      const sad = document.createElement("div");
+      sad.classList.add("sad");
+      sad.textContent = "😢";
+      sad.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+      sad.style.animationDuration = `${Math.random() * 1 + 5}s`; // Random confetti fall duration
+      document.body.appendChild(sad);
+
+      // Remove the heart after the animation ends to clean up
+      sad.addEventListener("animationend", () => {
+        sad.remove();
+      });
+
+    }
+
+
+
+  </script>
+</body>
+
+</html>
